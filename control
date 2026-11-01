@@ -1,0 +1,9 @@
+Package: com.example.se3floatbtn
+Name: SE3 Floating Button
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Standalone floating assistive control button on SpringBoard for A15 (iPhone SE 3) Rootless
+Maintainer: Developer
+Author: Developer
+Section: Tweaks
+Depends: mobilesubstrate | ellekit
