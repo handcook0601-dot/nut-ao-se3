@@ -1,0 +1,30 @@
+name: Build iOS Rootless Tweak (.deb)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Theos and SDK
+        run: |
+          brew install ldid xz dpkg fakeroot
+          export THEOS=~/theos
+          git clone --recursive https://github.com/theos/theos.git $THEOS
+          curl -sL https://github.com/theos/sdks/archive/master.tar.gz | tar -xz -C $THEOS/sdks --strip-components=1
+
+      - name: Build .deb Package (arm64 + arm64e Rootless)
+        run: |
+          export THEOS=~/theos
+          make package FINALPACKAGE=1
+
+      - name: Upload .deb Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SE3FloatingButton-deb
+          path: packages/*.deb
